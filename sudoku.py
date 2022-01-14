@@ -20,7 +20,11 @@ def valid_in_row(arr, index_row, num_candidate):
 
 # ==============================================
 # validates whether the given integer exists within the given column of matrix grid
-
+def valid_in_col(arr, index_col, num_candidate):
+    for index_row in range(len(arr)):
+        if arr[index_row][index_col] == num_candidate:
+            return False
+    return True
 
 # ==============================================
 # validates whether the given integer exists within the corresponding 3x3 quadrant of matrix grid

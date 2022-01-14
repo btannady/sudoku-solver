@@ -11,8 +11,12 @@ def find_empty_space(arr, empty_spot):
     return False
 
 # ==============================================
-# validates whether the given integer exists within the given row of matrix grid
-
+# validates whether the given integer isn't within the given row of matrix grid
+def valid_in_row(arr, index_row, num_candidate):
+    if num_candidate not in arr[index_row]:
+        return True
+    else:
+        return False
 
 # ==============================================
 # validates whether the given integer exists within the given column of matrix grid

@@ -28,8 +28,34 @@ def valid_in_col(arr, index_col, num_candidate):
 
 # ==============================================
 # validates whether the given integer exists within the corresponding 3x3 quadrant of matrix grid
-
-
+def valid_in_quadrant(arr, index_row, index_col, num_candidate):
+    # obtain desired quadrant rows
+    if index_row < 3:
+        rows = arr[:3]
+    elif index_row < 6:
+        rows = arr[3:6]
+    else:
+        rows = arr[6:]
+    # obtain desired quadrant columns
+    if index_col < 3:
+        for row in rows:
+            for i in range(0,3):
+                if row[i] == num_candidate:
+                    return False
+        return True
+    elif index_col < 6:
+        for row in rows:
+            for i in range(0,6):
+                if row[i] == num_candidate:
+                    return False
+        return True
+    else:
+        for row in rows:
+            for i in range(0,9):
+                if row[i] == num_candidate:
+                    return False
+        return True
+    
 
 # ==============================================
 # primary sudoku solver function that uses the backtracking algorithm to input, validate, tweak, and eventually solve sudoku!
@@ -38,6 +64,7 @@ def solve_sudoku(arr):
     spot = [0,0]
     print(find_empty_space(my_arr, spot))
     print(spot)
+
 
 # ==============================================
 

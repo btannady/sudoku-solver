@@ -2,23 +2,23 @@
 # GUI.py
 import pygame
 import time
-from sudoku_solver import solve_sudoku, is_valid_num, find_empty_space
+from sudoku_solver import solve_sudoku, is_valid_num, find_empty_space, display_grid
 pygame.font.init()
 
 # ========================================================
-# draws the matrix grid lines, also updates cube cell values to GUI
+# sets up sudoku GUI, translates user input to GUI actions, and updates cube cell data to GUI 
 class Grid:
     
     board = [
-        [0, 0, 3, 0, 0, 7, 0, 6, 0],
-        [0, 0, 7, 8, 0, 0, 2, 0, 0], 
-        [0, 0, 0, 0, 0, 0, 0, 3, 0],
-        [0, 0, 0, 0, 5, 0, 0, 0, 1],
-        [0, 0, 5, 4, 0, 8, 3, 7, 9],
-        [0, 3, 0, 2, 7, 9, 6, 4, 0],
-        [5, 0, 0, 0, 0, 0, 0, 0, 3],
-        [0, 7, 6, 3, 9, 4, 0, 0, 0],
-        [0, 0, 4, 0, 0, 5, 0, 8, 0]]
+        [6, 0, 0, 0, 0, 9, 0, 0, 4],
+        [0, 8, 9, 5, 0, 0, 0, 1, 6], 
+        [5, 0, 0, 0, 6, 0, 3, 0, 9],
+        [8, 3, 1, 0, 0, 0, 7, 0, 5],
+        [0, 2, 0, 0, 0, 0, 0, 6, 0],
+        [9, 0, 7, 0, 0, 0, 8, 4, 2],
+        [2, 0, 6, 0, 1, 0, 0, 0, 8],
+        [3, 7, 0, 0, 0, 6, 9, 2, 0],
+        [1, 0, 0, 3, 0, 0, 0, 0, 7]]
 
     def __init__(self, rows, cols, width, height, win):
         self.rows = rows
@@ -39,8 +39,11 @@ class Grid:
         if self.cubes[index_row][index_col].value == 0:
             self.cubes[index_row][index_col].set(num_candidate)
             self.update_model()
-
-            if is_valid_num(self.model, index_row, index_col, num_candidate) and self.solve():
+            display_grid(self.model)
+            if is_valid_num(self.model, index_row, index_col, num_candidate) and solve_sudoku(self.model):
+                display_grid(self.model)
+                print(index_row, index_col, num_candidate)
+                print(num_candidate, is_valid_num(self.model, index_row, index_col, num_candidate), solve_sudoku(self.model))
                 return True
             else:
                 self.cubes[index_row][index_col].set(0)
@@ -165,7 +168,7 @@ class Grid:
         return False
 
 # ========================================================
-# establishes a grid cell for proper display and data storage
+# establishes a grid cell for data storage and proper GUI display
 class Cube:
     rows = 9
     cols = 9
@@ -247,7 +250,7 @@ def format_time(secs):
     return mat
 
 # ========================================================
-# calls GUI functions and obtains user inputs
+# calls initial GUI functions, and listens for user inputs then passes them to functions  
 def main():
     win = pygame.display.set_mode((540,600))
     pygame.display.set_caption("S U D O K U")
@@ -333,7 +336,8 @@ def main():
         redraw_window(win, board, play_time, strikes)
         pygame.display.update()
 
-
+# start the program
 main()
+# end the program
 pygame.quit()
 

@@ -25,7 +25,7 @@ def find_empty_space(arr, empty_spot):
     return False
 
 # ==============================================
-# validates whether the given integer isn't within the given row of matrix grid.
+# validates whether the given integer isn't within any other cell in the given row of matrix grid.
 def valid_in_row(arr, index_row, num_candidate):
     if num_candidate not in arr[index_row]:
         return True
@@ -33,7 +33,7 @@ def valid_in_row(arr, index_row, num_candidate):
         return False
 
 # ==============================================
-# validates whether the given integer exists within the given column of matrix grid.
+# validates whether the given integer exists within any other cell in the given column of matrix grid.
 def valid_in_col(arr, index_col, num_candidate):
     for index_row in range(len(arr)):
         if arr[index_row][index_col] == num_candidate:
@@ -41,7 +41,7 @@ def valid_in_col(arr, index_col, num_candidate):
     return True
 
 # ==============================================
-# validates whether the given integer exists within the corresponding 3x3 quadrant of matrix grid.
+# validates whether the given integer exists within any other cell in the corresponding 3x3 quadrant of matrix grid.
 def valid_in_quadrant(arr, index_row, index_col, num_candidate):
     # obtain desired quadrant rows
     if index_row < 3:
@@ -144,13 +144,13 @@ my_arr = [[0,0,3,0,0,7,0,6,0],
           [0,0,4,0,0,5,0,8,0]]
 
 # Display Sudoku Grid (unsolved)
-print('< UNSOLVED SUDOKU GRID >')
-display_grid(my_arr)
+#print('< UNSOLVED SUDOKU GRID >')
+#display_grid(my_arr)
 
 # Begin Program !
-solve_sudoku(my_arr)
-print()
+#solve_sudoku(my_arr)
+#print()
 
 # Display Sudoku Grid (solved)
-print('< SOLVED SUDOKU GRID >')
-display_grid(my_arr)
+#print('< SOLVED SUDOKU GRID >')
+#display_grid(my_arr)

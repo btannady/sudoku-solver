@@ -5,8 +5,10 @@ import time
 from sudoku_solver import solve_sudoku, is_valid_num, find_empty_space
 pygame.font.init()
 
-
+# ========================================================
+# draws the matrix grid lines, also updates cube cell values to GUI
 class Grid:
+    
     board = [
         [0, 0, 3, 0, 0, 7, 0, 6, 0],
         [0, 0, 7, 8, 0, 0, 2, 0, 0], 
@@ -102,7 +104,7 @@ class Grid:
         return True
 
     # ==============================================================================
-
+    # solves the sudoku board while displaying backtracking progress to GUI;
     # essentially the same as solve_sudoku(), except with additional GUI components
     def solve_gui(self):
         
@@ -162,6 +164,8 @@ class Grid:
         # fix this issue by undoing our most recent updates and try again
         return False
 
+# ========================================================
+# establishes a grid cell for proper display and data storage
 class Cube:
     rows = 9
     cols = 9
@@ -214,27 +218,26 @@ class Cube:
     def set_temp(self, val):
         self.temp = val
 
-
-def redraw_window(window, board, time, strikes):
-    """
-    draws alloted time, incorrect strikes, and matrix grid GUI
-    """
+# ========================================================
+# draws to GUI; alloted time, incorrect strikes, and calls draw() matrix grid function.
+def redraw_window(window, board, time, strikes): 
     
     window.fill((255,255,255))
     
     # Draw time
     fnt = pygame.font.SysFont("comicsans", 25)
     text = fnt.render("Time: " + format_time(time), 1, (0,0,0))
-    window.blit(text, (540 - 160, 560))
+    window.blit(text, (20, 555))
 
     # Draw Strikes
     text = fnt.render("X " * strikes, 1, (255, 0, 0))
-    window.blit(text, (20, 560))
+    window.blit(text, (540 - 160, 555))
     
     # Draw grid and board
     board.draw()
 
-
+# ========================================================
+# prepares Time output for nice looking display
 def format_time(secs):
     sec = secs%60
     minute = secs//60
@@ -243,10 +246,11 @@ def format_time(secs):
     mat = " " + str(minute) + ":" + str(sec)
     return mat
 
-
+# ========================================================
+# calls GUI functions and obtains user inputs
 def main():
     win = pygame.display.set_mode((540,600))
-    pygame.display.set_caption("Sudoku")
+    pygame.display.set_caption("S U D O K U")
     board = Grid(9, 9, 540, 540, win)
     key = None
     run = True

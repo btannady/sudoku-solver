@@ -36,6 +36,7 @@ def valid_in_quadrant(arr, index_row, index_col, num_candidate):
         rows = arr[3:6]
     else:
         rows = arr[6:]
+  
     # obtain desired quadrant columns
     if index_col < 3:
         for row in rows:
@@ -45,13 +46,13 @@ def valid_in_quadrant(arr, index_row, index_col, num_candidate):
         return True
     elif index_col < 6:
         for row in rows:
-            for i in range(0,6):
+            for i in range(3,6):
                 if row[i] == num_candidate:
                     return False
         return True
     else:
         for row in rows:
-            for i in range(0,9):
+            for i in range(6,9):
                 if row[i] == num_candidate:
                     return False
         return True
@@ -78,13 +79,12 @@ def solve_sudoku(arr):
     # validate whether we have no remaining empty spaces, meaning when we found a completed sudoku grid solution.
     if not find_empty_space(arr, curr_spot):
         # no remaining spaces detected
-        print(arr)
         return True
     
     # save coordinate spots into immutable variables
     index_row = curr_spot[0]
     index_col = curr_spot[1]
-    print('SOLVE SUDOKU, FOUND EMPTY SPOT:', index_row, index_col, arr[0])
+
     # -----------------------------------------------------
     # reaching here means there is still an empty space in sudoku grid
     # curr_spot has now been updated with an empty spot.
@@ -93,15 +93,13 @@ def solve_sudoku(arr):
     for possible_num in range(1,10):
 
         # ONLY allow the assigning of possible_num if VALID.
-        print('SOLVE SUDOKU, FOUND EMPTY SPOT:', index_row, index_col, possible_num, arr[0])
         if is_valid_num(arr, index_row, index_col, possible_num):
-            print(index_row, index_col, possible_num)
+
             # possible_num is valid; 
             # tentatively update our sudoku grid and continue solve_sudoku() for future grid cells
             arr[index_row][index_col] = possible_num
-            print(arr)
+            
             if solve_sudoku(arr):
-                print('HELLO')
                 # we've filled entire grid with valid numbers
                 return True
  
@@ -133,7 +131,10 @@ my_arr = [[3, 1, 6, 5, 0, 8, 4, 0, 0],
           [0, 0, 5, 2, 0, 6, 3, 0, 0]]
 
 solve_sudoku(my_arr)
-#print(my_arr)
+for row in my_arr:
+    print(row)
+
+
 test =   [[3, 1, 6, 5, 0, 8, 4, 0, 0],
           [5, 2, 0, 0, 0, 0, 0, 0, 0],
           [0, 8, 7, 0, 0, 0, 0, 3, 1],
@@ -143,6 +144,3 @@ test =   [[3, 1, 6, 5, 0, 8, 4, 0, 0],
           [1, 3, 0, 0, 0, 0, 2, 5, 0],
           [0, 0, 0, 0, 0, 0, 0, 7, 4],
           [0, 0, 5, 2, 0, 6, 3, 0, 0]]
-print(valid_in_row(test, 0, 7))
-print(valid_in_col(test, 4, 7))
-print(valid_in_quadrant(test, 0, 4, 7))

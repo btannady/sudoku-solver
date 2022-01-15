@@ -1,6 +1,20 @@
 
 # ==============================================
-# identifies whether there exists an empty spot within the given array.
+# displays solved sudoku board nicely to the console
+def display_grid(arr):
+
+    for index_row in range(len(arr)):
+        if index_row in (3,6,9):
+            print('======================')
+        
+        for index_col in range(len(arr[0])):
+            if index_col in (3,6,9):
+                print('|', end=" ")
+            print(arr[index_row][index_col], end=" ")
+        print(end="\n")
+
+# ==============================================
+# validates whether there exists an empty spot within the given array, if so then sets empty_spot to those coordinates.
 def find_empty_space(arr, empty_spot):
     for index_row in range(len(arr)):
         for index_col in range(len(arr[0])):
@@ -131,11 +145,14 @@ my_arr = [[0,0,3,0,0,7,0,6,0],
           [0,7,6,3,9,4,0,0,0],
           [0,0,4,0,0,5,0,8,0]]
 
+# Display Sudoku Grid (unsolved)
+print('< UNSOLVED SUDOKU GRID >')
+display_grid(my_arr)
+
 # Begin Program !
 solve_sudoku(my_arr)
+print()
 
 # Display Sudoku Grid (solved)
-print('==== SOLVED SUDOKU GRID ====')
-for row in my_arr:
-    print(row)
-
+print('< SOLVED SUDOKU GRID >')
+display_grid(my_arr)

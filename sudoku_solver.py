@@ -26,17 +26,17 @@ def find_empty_space(arr, empty_spot):
 
 # ==============================================
 # validates whether the given integer isn't within any other cell in the given row of matrix grid.
-def valid_in_row(arr, index_row, num_candidate):
-    if num_candidate not in arr[index_row]:
-        return True
-    else:
-        return False
+def valid_in_row(arr, index_row, index_col, num_candidate):
+    for curr_col in range(len(arr[index_row])):
+        if arr[index_row][curr_col] == num_candidate and curr_col != index_col:
+            return False
+    return True
 
 # ==============================================
 # validates whether the given integer exists within any other cell in the given column of matrix grid.
-def valid_in_col(arr, index_col, num_candidate):
-    for index_row in range(len(arr)):
-        if arr[index_row][index_col] == num_candidate:
+def valid_in_col(arr, index_row, index_col, num_candidate):
+    for curr_row in range(len(arr)):
+        if arr[curr_row][index_col] == num_candidate and curr_row != index_row:
             return False
     return True
 
@@ -45,36 +45,36 @@ def valid_in_col(arr, index_col, num_candidate):
 def valid_in_quadrant(arr, index_row, index_col, num_candidate):
     # obtain desired quadrant rows
     if index_row < 3:
-        rows = arr[:3]
+        rows = (0, 1, 2)
     elif index_row < 6:
-        rows = arr[3:6]
+        rows = (3, 4, 5)
     else:
-        rows = arr[6:]
+        rows = (6, 7, 8)
   
     # obtain desired quadrant columns
     if index_col < 3:
-        for row in rows:
-            for i in range(0,3):
-                if row[i] == num_candidate:
+        for curr_row in rows:
+            for curr_col in range(0,3):
+                if arr[curr_row][curr_col] == num_candidate and (curr_row, curr_col) != (index_row, index_col):
                     return False
         return True
     elif index_col < 6:
-        for row in rows:
-            for i in range(3,6):
-                if row[i] == num_candidate:
+        for curr_row in rows:
+            for curr_col in range(3,6):
+                if arr[curr_row][curr_col] == num_candidate and (curr_row, curr_col) != (index_row, index_col):
                     return False
         return True
     else:
-        for row in rows:
-            for i in range(6,9):
-                if row[i] == num_candidate:
+        for curr_row in rows:
+            for curr_col in range(6,9):
+                if arr[curr_row][curr_col] == num_candidate and (curr_row, curr_col) != (index_row, index_col):
                     return False
         return True
 
 # ==============================================
 # num_candidate must be unique to row, unique to column, and unique to 3x3 grid quadrant
 def is_valid_num(arr, index_row, index_col, num_candidate):
-    if valid_in_row(arr, index_row, num_candidate) and valid_in_col(arr, index_col, num_candidate) and valid_in_quadrant(arr, index_row, index_col, num_candidate):
+    if valid_in_row(arr, index_row, index_col, num_candidate) and valid_in_col(arr, index_row, index_col, num_candidate) and valid_in_quadrant(arr, index_row, index_col, num_candidate):
         return True
     else:
         return False
@@ -132,6 +132,7 @@ def solve_sudoku(arr):
 
 # ==============================================
 
+'''
 # Example Sudodu Grid (unsolved)
 my_arr = [[0,0,3,0,0,7,0,6,0],
           [0,0,7,8,0,0,2,0,0], 
@@ -142,15 +143,17 @@ my_arr = [[0,0,3,0,0,7,0,6,0],
           [5,0,0,0,0,0,0,0,3],
           [0,7,6,3,9,4,0,0,0],
           [0,0,4,0,0,5,0,8,0]]
-
+          
 # Display Sudoku Grid (unsolved)
-#print('< UNSOLVED SUDOKU GRID >')
-#display_grid(my_arr)
+print('< UNSOLVED SUDOKU GRID >')
+display_grid(my_arr)
 
 # Begin Program !
-#solve_sudoku(my_arr)
-#print()
+solve_sudoku(my_arr)
+print()
 
 # Display Sudoku Grid (solved)
-#print('< SOLVED SUDOKU GRID >')
-#display_grid(my_arr)
+print('< SOLVED SUDOKU GRID >')
+display_grid(my_arr)
+
+'''

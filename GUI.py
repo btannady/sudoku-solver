@@ -2,7 +2,7 @@
 # GUI.py
 import pygame
 import time
-from sudoku_solver import solve_sudoku, is_valid_num, find_empty_space, display_grid
+from sudoku_solver import solve_sudoku, is_valid_num, find_empty_space
 pygame.font.init()
 
 # ========================================================
@@ -39,11 +39,7 @@ class Grid:
         if self.cubes[index_row][index_col].value == 0:
             self.cubes[index_row][index_col].set(num_candidate)
             self.update_model()
-            display_grid(self.model)
             if is_valid_num(self.model, index_row, index_col, num_candidate) and solve_sudoku(self.model):
-                display_grid(self.model)
-                print(index_row, index_col, num_candidate)
-                print(num_candidate, is_valid_num(self.model, index_row, index_col, num_candidate), solve_sudoku(self.model))
                 return True
             else:
                 self.cubes[index_row][index_col].set(0)

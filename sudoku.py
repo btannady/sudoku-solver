@@ -57,7 +57,7 @@ def valid_in_quadrant(arr, index_row, index_col, num_candidate):
         return True
 
 # ==============================================
-# simply calls the three validation checks for whether it's okay to input a number candidate in an empty cell.
+# num_candidate must be unique to row, unique to column, and unique to 3x3 grid quadrant
 def is_valid_num(arr, index_row, index_col, num_candidate):
     if valid_in_row(arr, index_row, num_candidate) and valid_in_col(arr, index_col, num_candidate) and valid_in_quadrant(arr, index_row, index_col, num_candidate):
         return True
@@ -68,19 +68,61 @@ def is_valid_num(arr, index_row, index_col, num_candidate):
 # primary sudoku solver function that uses the backtracking algorithm to input, validate, tweak, and eventually solve sudoku!
 
 def solve_sudoku(arr):
-    spot = [0,0]
-    print(find_empty_space(my_arr, spot))
-    print(spot)
-    for i in range(1,10):
-        if is_valid_num(arr, spot[0], spot[1], i):
-            print(True, i)
-        else:
-            print(False, i)
 
+    # -----------------------------------------------------
+
+    # keep track of empty coordinate spots
+    # update curr_spot using find_empty_space() function.
+    curr_spot = [0,0] 
+
+    # validate whether we have no remaining empty spaces, meaning when we found a completed sudoku grid solution.
+    if not find_empty_space(arr, curr_spot):
+        # no remaining spaces detected
+        print(arr)
+        return True
+    
+    # save coordinate spots into immutable variables
+    index_row = curr_spot[0]
+    index_col = curr_spot[1]
+    print('SOLVE SUDOKU, FOUND EMPTY SPOT:', index_row, index_col, arr[0])
+    # -----------------------------------------------------
+    # reaching here means there is still an empty space in sudoku grid
+    # curr_spot has now been updated with an empty spot.
+
+    # assign possible numbers to the empty curr_spot 
+    for possible_num in range(1,10):
+
+        # ONLY allow the assigning of possible_num if VALID.
+        print('SOLVE SUDOKU, FOUND EMPTY SPOT:', index_row, index_col, possible_num, arr[0])
+        if is_valid_num(arr, index_row, index_col, possible_num):
+            print(index_row, index_col, possible_num)
+            # possible_num is valid; 
+            # tentatively update our sudoku grid and continue solve_sudoku() for future grid cells
+            arr[index_row][index_col] = possible_num
+            print(arr)
+            if solve_sudoku(arr):
+                print('HELLO')
+                # we've filled entire grid with valid numbers
+                return True
+ 
+            # reaching here means either...
+            # (1) possible_num failed validation, invalid.
+            # or (2) although possible_num was valid, there was a discrepancy later on. 
+            
+            # undo possible_num assignment to this grid cell and try a different number
+            arr[index_row][index_col] = 0
+    
+    # BACKTRACKING CASE
+    # reaching here means we've exhausted all possible numbers in the empty curr_spot
+    # this discrepancy suggests we tentatively assigned an incorrect number somewhere previously before
+    # fix this issue by undoing our most recent updates and try again
+    return False
+
+    # -----------------------------------------------------
 
 # ==============================================
 
-my_arr = [[3, 0, 6, 5, 0, 8, 4, 0, 0],
+my_arr = [[3, 1, 6, 5, 0, 8, 4, 0, 0],
           [5, 2, 0, 0, 0, 0, 0, 0, 0],
           [0, 8, 7, 0, 0, 0, 0, 3, 1],
           [0, 0, 3, 0, 1, 0, 0, 8, 0],
@@ -91,4 +133,16 @@ my_arr = [[3, 0, 6, 5, 0, 8, 4, 0, 0],
           [0, 0, 5, 2, 0, 6, 3, 0, 0]]
 
 solve_sudoku(my_arr)
-
+#print(my_arr)
+test =   [[3, 1, 6, 5, 0, 8, 4, 0, 0],
+          [5, 2, 0, 0, 0, 0, 0, 0, 0],
+          [0, 8, 7, 0, 0, 0, 0, 3, 1],
+          [0, 0, 3, 0, 1, 0, 0, 8, 0],
+          [9, 0, 0, 8, 6, 3, 0, 0, 5],
+          [0, 5, 0, 0, 9, 0, 6, 0, 0],
+          [1, 3, 0, 0, 0, 0, 2, 5, 0],
+          [0, 0, 0, 0, 0, 0, 0, 7, 4],
+          [0, 0, 5, 2, 0, 6, 3, 0, 0]]
+print(valid_in_row(test, 0, 7))
+print(valid_in_col(test, 4, 7))
+print(valid_in_quadrant(test, 0, 4, 7))

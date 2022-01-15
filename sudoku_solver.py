@@ -84,8 +84,6 @@ def is_valid_num(arr, index_row, index_col, num_candidate):
 
 def solve_sudoku(arr):
 
-    # -----------------------------------------------------
-
     # keep track of empty coordinate spots
     # update curr_spot using find_empty_space() function.
     curr_spot = [0,0] 

@@ -9,6 +9,6 @@ Press SPACEBAR to activate the backtracking auto-solver.
 
 ![2022-01-15_18-21-58](https://user-images.githubusercontent.com/39476859/149645077-5aae782e-23b3-4ef7-b545-ee0082282c5e.gif)
 
-(time delay added to allow to visual observing of the backtracking algorithm)
+(time delay added to allow visual observing of the backtracking algorithm)
 
 Made with Python and Pygame. 

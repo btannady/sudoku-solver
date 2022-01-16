@@ -198,11 +198,12 @@ class Cube:
     def draw_change(self, win, g=True):
         fnt = pygame.font.SysFont("comicsans", 40)
 
+        update_color = (255, 250, 242)
         gap = self.width / 9
         x = self.col * gap
         y = self.row * gap
 
-        pygame.draw.rect(win, (255, 255, 255), (x, y, gap, gap), 0)
+        pygame.draw.rect(win, update_color, (x, y, gap, gap), 0)
 
         text = fnt.render(str(self.value), 1, (0, 0, 0))
         win.blit(text, (x + (gap / 2 - text.get_width() / 2), y + (gap / 2 - text.get_height() / 2)))
@@ -221,7 +222,8 @@ class Cube:
 # draws to GUI; alloted time, incorrect strikes, and calls draw() matrix grid function.
 def redraw_window(window, board, time, strikes): 
     
-    window.fill((255,255,255))
+    background_color = ( 255, 238, 176 )
+    window.fill(background_color)
     
     # Draw time
     fnt = pygame.font.SysFont("comicsans", 25)

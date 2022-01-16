@@ -1,7 +1,7 @@
 """
 sudoku_solver.py
 
-# contains functions necessary for auto-solving sudoku
+contains functions necessary for auto-solving sudoku
 """
 
 

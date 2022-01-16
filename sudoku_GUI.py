@@ -1,5 +1,9 @@
+"""
+sudoku_GUI.py
 
-# GUI.py
+establishes/maintains GUI, allowing users to play or auto-solve sudoku grids
+"""
+
 import pygame
 import time
 from sudoku_solver import solve_sudoku, is_valid_num, find_empty_space
@@ -10,15 +14,15 @@ pygame.font.init()
 class Grid:
     
     board = [
-        [6, 0, 0, 0, 0, 9, 0, 0, 4],
-        [0, 8, 9, 5, 0, 0, 0, 1, 6], 
-        [5, 0, 0, 0, 6, 0, 3, 0, 9],
-        [8, 3, 1, 0, 0, 0, 7, 0, 5],
-        [0, 2, 0, 0, 0, 0, 0, 6, 0],
-        [9, 0, 7, 0, 0, 0, 8, 4, 2],
-        [2, 0, 6, 0, 1, 0, 0, 0, 8],
-        [3, 7, 0, 0, 0, 6, 9, 2, 0],
-        [1, 0, 0, 3, 0, 0, 0, 0, 7]]
+        [7, 4, 0, 0, 3, 0, 0, 1, 0],
+        [0, 1, 9, 0, 6, 8, 5, 0, 2], 
+        [0, 0, 0, 0, 0, 4, 3, 0, 0],
+        [0, 5, 6, 3, 7, 0, 0, 0, 1],
+        [0, 0, 1, 8, 0, 0, 0, 9, 5],
+        [0, 9, 0, 0, 2, 0, 6, 0, 0],
+        [1, 0, 3, 4, 0, 7, 2, 0, 0],
+        [5, 0, 0, 2, 0, 0, 0, 0, 8],
+        [0, 8, 0, 0, 0, 1, 4, 7, 0]]
 
     def __init__(self, rows, cols, width, height, win):
         self.rows = rows
@@ -139,7 +143,7 @@ class Grid:
                 self.cubes[index_row][index_col].draw_change(self.win, True)
                 self.update_model()
                 pygame.display.update()
-                pygame.time.delay(100)
+                pygame.time.delay(20)
 
                 if self.solve_gui():
                     # we've filled entire grid with valid numbers
@@ -155,6 +159,8 @@ class Grid:
                 self.update_model()
                 self.cubes[index_row][index_col].draw_change(self.win, False)
                 pygame.display.update()
+
+                # add delay so users can visually observe the backtracking
                 pygame.time.delay(100)
         
         # BACKTRACKING CASE
@@ -198,7 +204,7 @@ class Cube:
     def draw_change(self, win, g=True):
         fnt = pygame.font.SysFont("comicsans", 40)
 
-        update_color = (255, 250, 242)
+        update_color = ( 255, 244, 224 )
         gap = self.width / 9
         x = self.col * gap
         y = self.row * gap
@@ -208,9 +214,9 @@ class Cube:
         text = fnt.render(str(self.value), 1, (0, 0, 0))
         win.blit(text, (x + (gap / 2 - text.get_width() / 2), y + (gap / 2 - text.get_height() / 2)))
         if g:
-            pygame.draw.rect(win, (0, 255, 0), (x, y, gap, gap), 3)
+            pygame.draw.rect(win, (0, 255, 0), (x, y, gap, gap), 3) # green outline for tentatively updated cubes
         else:
-            pygame.draw.rect(win, (255, 0, 0), (x, y, gap, gap), 3)
+            pygame.draw.rect(win, (255, 0, 0), (x, y, gap, gap), 3) # red outline for undoing cubes w/ backtracking
 
     def set(self, val):
         self.value = val

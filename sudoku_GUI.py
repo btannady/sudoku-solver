@@ -1,8 +1,7 @@
-"""
-sudoku_GUI.py
 
-establishes/maintains GUI, allowing users to play or auto-solve sudoku grids
-"""
+# sudoku_GUI.py
+# establishes/maintains GUI, allowing users to both play and auto-solve sudoku grids
+
 
 import pygame
 import time
@@ -21,7 +20,7 @@ class Grid:
         [0, 0, 1, 8, 0, 0, 0, 9, 5],
         [0, 9, 0, 0, 2, 0, 6, 0, 0],
         [1, 0, 3, 4, 0, 7, 2, 0, 0],
-        [5, 0, 0, 2, 0, 0, 0, 0, 8],
+        [5, 0, 0, 2, 0, 0, 0, 0, 0],
         [0, 8, 0, 0, 0, 1, 4, 7, 0]]
 
     def __init__(self, rows, cols, width, height, win):
@@ -143,7 +142,7 @@ class Grid:
                 self.cubes[index_row][index_col].draw_change(self.win, True)
                 self.update_model()
                 pygame.display.update()
-                pygame.time.delay(20)
+                pygame.time.delay(100)
 
                 if self.solve_gui():
                     # we've filled entire grid with valid numbers

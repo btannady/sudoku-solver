@@ -12,3 +12,13 @@ Press SPACEBAR to activate the backtracking auto-solver.
 (time delay added to allow visual observing of the backtracking algorithm)
 
 Made with Python and Pygame. 
+
+====================================================================
+
+RIGHT CLICK - selects an empty grid cell
+
+1, 2, 3, 4, 5, 6, 7, 8, 9 - notes down number in the selected grid cell
+
+ENTER - submits number in selected grid cell
+
+SPACEBAR - activates recursive backtracking to automatically discover the missing Sudoku grid cells
